@@ -54,7 +54,7 @@ MentorRoutes.put("/assign-students/:id", async (req, res) => {
 
         const mentor = new mentormodel(req.body);
 
-        await mentormodel.updateOne({ id: id }, { "$push": { students: mentor.students } });
+        await mentormodel.updateOne({ id: id }, { "$push": { students:{"$each":mentor.students} } });
 
         await studentmodel.updateMany({ student_name: { "$in": mentor.students } }, { $set: { mentor_name: mentor.mentor_name } });
 
